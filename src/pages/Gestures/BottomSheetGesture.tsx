@@ -1,0 +1,122 @@
+import React, {memo, useCallback, useEffect} from 'react';
+import {
+  Dimensions,
+  StatusBar,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import {Gesture, GestureDetector} from 'react-native-gesture-handler';
+import Animated, {
+  Extrapolate,
+  interpolate,
+  useAnimatedStyle,
+  useSharedValue,
+  withSpring,
+} from 'react-native-reanimated';
+
+const {height: SCREEN_HEIGHT} = Dimensions.get('screen');
+const MAX_TRANSLATE_Y = -SCREEN_HEIGHT + 50;
+
+const BottomSheetGesture = () => {
+  const translateY = useSharedValue(0);
+  const isActive = useSharedValue(false);
+
+  const scrollTo = useCallback((destination: number) => {
+    'worklet';
+    isActive.value = destination !== 0;
+    translateY.value = withSpring(destination, {damping: 50});
+  }, []);
+
+  const context = useSharedValue({y: 0});
+  const gesture = Gesture.Pan()
+    .onStart(() => {
+      context.value = {y: translateY.value};
+    })
+    .onUpdate(event => {
+      translateY.value = event.translationY + context.value.y;
+      translateY.value = Math.max(translateY.value, MAX_TRANSLATE_Y);
+    })
+    .onEnd(() => {
+      if (translateY.value > -SCREEN_HEIGHT / 3) {
+        scrollTo(0);
+      } else if (translateY.value < -SCREEN_HEIGHT / 1.5) {
+        scrollTo(MAX_TRANSLATE_Y);
+      }
+    });
+
+  useEffect(() => {
+    scrollTo(-SCREEN_HEIGHT / 3);
+  }, []);
+
+  const rBottomSheetStyle = useAnimatedStyle(() => {
+    const borderRadius = interpolate(
+      translateY.value,
+      [MAX_TRANSLATE_Y + 50, MAX_TRANSLATE_Y],
+      [25, 5],
+      Extrapolate.CLAMP,
+    );
+
+    return {
+      borderRadius,
+      transform: [{translateY: translateY.value}],
+    };
+  });
+
+  return (
+    <View style={styles.container}>
+      <StatusBar barStyle={'light-content'} />
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => {
+          if (isActive.value) {
+            scrollTo(0);
+          } else {
+            scrollTo(-200);
+          }
+        }}
+      />
+      <GestureDetector gesture={gesture}>
+        <Animated.View style={[styles.bottomSheetContainer, rBottomSheetStyle]}>
+          <View style={styles.line} />
+          <View style={{flex: 1, backgroundColor: 'orange'}} />
+        </Animated.View>
+      </GestureDetector>
+    </View>
+  );
+};
+
+export default memo(BottomSheetGesture);
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#111',
+    justifyContent: 'center',
+    alignContent: 'center',
+  },
+  bottomSheetContainer: {
+    height: SCREEN_HEIGHT,
+    backgroundColor: 'white',
+    width: '100%',
+    position: 'absolute',
+    top: SCREEN_HEIGHT,
+    borderRadius: 25,
+  },
+  line: {
+    width: 75,
+    height: 4,
+    backgroundColor: 'grey',
+    borderRadius: 2,
+    alignSelf: 'center',
+    marginVertical: 15,
+  },
+  button: {
+    height: 50,
+    aspectRatio: 1,
+    backgroundColor: 'white',
+    borderRadius: 25,
+    opacity: 0.6,
+    alignSelf: 'center',
+  },
+});
