@@ -9,6 +9,7 @@ import BottomSheetGesture from './pages/Gestures/BottomSheetGesture';
 import BasicAnimation from './pages/Animations/BasicAnimation';
 import PinchGesture from './pages/Gestures/PinchGesture';
 import DoubleTapGesture from './pages/Gestures/DoubleTapGesture';
+import ColorPickerAnimation from './pages/Animations/ColorPickerAnimation';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -64,6 +65,11 @@ function Routes() {
           name="BasicAnimation"
           component={BasicAnimation}
           options={{title: 'Basic'}}
+        />
+        <Stack.Screen
+          name="ColorPickerAnimation"
+          component={ColorPickerAnimation}
+          options={{title: 'Color Picker'}}
         />
       </Stack.Navigator>
     </NavigationContainer>

@@ -22,6 +22,11 @@ const DATA: Data[] = [
     title: 'Basic',
     navigateTo: 'BasicAnimation',
   },
+  {
+    id: 1,
+    title: 'Color Picker',
+    navigateTo: 'ColorPickerAnimation',
+  },
 ];
 
 const AnimationsPage: React.FC<AnimationsPageProps> = ({navigation}) => {

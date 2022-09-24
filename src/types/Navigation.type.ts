@@ -8,4 +8,5 @@ export type RootStackParamList = {
 
   Animations: undefined;
   BasicAnimation: undefined;
+  ColorPickerAnimation: undefined;
 };
