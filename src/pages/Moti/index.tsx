@@ -11,32 +11,27 @@ import {
 import {RootStackParamList} from '../../types/Navigation.type';
 import {Data} from '../HomePage';
 
-type GesturesPageProps = NativeStackScreenProps<RootStackParamList, 'Gestures'>;
+type MotiAnimationsPageProps = NativeStackScreenProps<
+  RootStackParamList,
+  'MotiAnimations'
+>;
 
 const DATA: Data[] = [
   {
     id: 0,
-    title: 'Basic',
-    navigateTo: 'BasicGesture',
+    title: 'Switch',
+    navigateTo: 'SwitchMotiAnimation',
   },
   {
     id: 1,
-    title: 'Pinch Gesture',
-    navigateTo: 'PinchGesture',
-  },
-  {
-    id: 2,
-    title: 'Bottom Sheet',
-    navigateTo: 'BottomSheetGesture',
-  },
-  {
-    id: 3,
-    title: 'DoubleTap Like (Instagram)',
-    navigateTo: 'DoubleTapGesture',
+    title: 'Loading',
+    navigateTo: 'LoadingMotiAnimation',
   },
 ];
 
-const GesturesPage: React.FC<GesturesPageProps> = ({navigation}) => {
+const MotiAnimationsPage: React.FC<MotiAnimationsPageProps> = ({
+  navigation,
+}) => {
   const keyExtractor = useCallback((data: Data) => {
     return data.id.toString();
   }, []);
@@ -62,7 +57,7 @@ const GesturesPage: React.FC<GesturesPageProps> = ({navigation}) => {
     </View>
   );
 };
-export default memo(GesturesPage);
+export default memo(MotiAnimationsPage);
 
 const styles = StyleSheet.create({
   container: {flex: 1, backgroundColor: '#fff'},

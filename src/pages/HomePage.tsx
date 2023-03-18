@@ -30,6 +30,21 @@ const DATA: Data[] = [
     title: '✨ Animations',
     navigateTo: 'Animations',
   },
+  {
+    id: 2,
+    title: '⚠️ Vanilla Animations',
+    navigateTo: 'VanillaAnimations',
+  },
+  {
+    id: 3,
+    title: '🧩 Moti',
+    navigateTo: 'MotiAnimations',
+  },
+  {
+    id: 4,
+    title: '🧩 Skia',
+    navigateTo: 'SkiaAnimations',
+  },
 ];
 
 const HomePage: React.FC<HomePageProps> = ({navigation}) => {
@@ -63,7 +78,7 @@ const HomePage: React.FC<HomePageProps> = ({navigation}) => {
         keyExtractor={keyExtractor}
         renderItem={renderItem}
       />
-      <Text style={styles.infoText}>
+      {/* <Text style={styles.infoText}>
         Learned from{' '}
         <Text
           style={{
@@ -74,7 +89,7 @@ const HomePage: React.FC<HomePageProps> = ({navigation}) => {
           onPress={openLink}>
           Reactiive
         </Text>
-      </Text>
+      </Text> */}
     </View>
   );
 };

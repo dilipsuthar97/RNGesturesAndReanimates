@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {StatusBar, View} from 'react-native';
-import {gestureHandlerRootHOC} from 'react-native-gesture-handler';
+import {gestureHandlerRootHOC, GestureHandlerRootView} from 'react-native-gesture-handler';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import Routes from './src/Routes';
 
@@ -8,7 +8,9 @@ function App() {
   return (
     <React.Fragment>
       <SafeAreaProvider>
-        <Routes />
+        <GestureHandlerRootView style={{flex: 1}}>
+          <Routes />
+        </GestureHandlerRootView>
       </SafeAreaProvider>
     </React.Fragment>
   );

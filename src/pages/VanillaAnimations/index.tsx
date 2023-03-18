@@ -11,46 +11,52 @@ import {
 import {RootStackParamList} from '../../types/Navigation.type';
 import {Data} from '../HomePage';
 
-type GesturesPageProps = NativeStackScreenProps<RootStackParamList, 'Gestures'>;
+type VanillaAnimationsPageProps = NativeStackScreenProps<
+  RootStackParamList,
+  'VanillaAnimations'
+>;
 
 const DATA: Data[] = [
   {
     id: 0,
     title: 'Basic',
-    navigateTo: 'BasicGesture',
+    navigateTo: 'BasicVanillaAnimation',
   },
   {
     id: 1,
-    title: 'Pinch Gesture',
-    navigateTo: 'PinchGesture',
+    title: 'Carousel',
+    navigateTo: 'CarouselAnimation',
   },
   {
     id: 2,
-    title: 'Bottom Sheet',
-    navigateTo: 'BottomSheetGesture',
+    title: 'Carousel 2',
+    navigateTo: 'CarouselAnimationTwo',
   },
   {
     id: 3,
-    title: 'DoubleTap Like (Instagram)',
-    navigateTo: 'DoubleTapGesture',
+    title: 'Layout Animation',
+    navigateTo: 'LayoutAnimation',
   },
 ];
 
-const GesturesPage: React.FC<GesturesPageProps> = ({navigation}) => {
-  const keyExtractor = useCallback((data: Data) => {
+const VanillaAnimationsPage: React.FC<VanillaAnimationsPageProps> = ({navigation}) => {
+  const keyExtractor = useCallback((data: typeof DATA[0]) => {
     return data.id.toString();
   }, []);
 
-  const renderItem: ListRenderItem<Data> = useCallback(({item, index}) => {
-    return (
-      <TouchableOpacity
-        style={styles.item}
-        activeOpacity={0.4}
-        onPress={() => navigation.navigate(item.navigateTo)}>
-        <Text style={styles.title}>{item.title}</Text>
-      </TouchableOpacity>
-    );
-  }, []);
+  const renderItem: ListRenderItem<typeof DATA[0]> = useCallback(
+    ({item, index}) => {
+      return (
+        <TouchableOpacity
+          style={styles.item}
+          activeOpacity={0.4}
+          onPress={() => navigation.navigate(item.navigateTo)}>
+          <Text style={styles.title}>{item.title}</Text>
+        </TouchableOpacity>
+      );
+    },
+    [],
+  );
 
   return (
     <View style={styles.container}>
@@ -62,7 +68,7 @@ const GesturesPage: React.FC<GesturesPageProps> = ({navigation}) => {
     </View>
   );
 };
-export default memo(GesturesPage);
+export default memo(VanillaAnimationsPage);
 
 const styles = StyleSheet.create({
   container: {flex: 1, backgroundColor: '#fff'},
